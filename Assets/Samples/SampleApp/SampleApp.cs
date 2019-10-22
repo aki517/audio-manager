@@ -2,12 +2,6 @@
 
 using Goisagi;
 
-/*
-・設定ふぁいるを止めてAudioManagerにデフォ値を設定する.
-・実機確認.
-・3Dサウンド位置更新.
-*/
-
 /// <summary>
 /// サンプルアプリクラス.
 /// </summary>
