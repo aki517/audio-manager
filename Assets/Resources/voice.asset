@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94264923fc1f94df48b877053d1e3ad8, type: 3}
+  m_Name: voice
+  m_EditorClassIdentifier: 
+  group: {fileID: 4221797999567028901, guid: 5121f13b7a0f04b1f85a65dfc9e9244a, type: 2}
+  snapShot: {fileID: 0}
+  priority: 128
+  clips:
+  - {fileID: 8300000, guid: b3c24b0b5660e4d5e86c4d932ee11674, type: 3}
+  - {fileID: 8300000, guid: 6322ed575ade044c79de11d79fdcffc2, type: 3}
+  - {fileID: 8300000, guid: 7a8556f2e75484f93820bdab628ab720, type: 3}
