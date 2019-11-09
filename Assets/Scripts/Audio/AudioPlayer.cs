@@ -144,7 +144,7 @@ public class AudioPlayer
     /// <summary>
     /// 再生.
     /// </summary>
-    public int Play( int dataHandle, int clipIndex, bool isLoop = false, float fadeInTime = 0.0f, float volume = 1.0f, Transform trackingTrans = null, bool isTracking = false )
+    public int Play( int dataHandle, int clipIndex, bool isLoop = false, float fadeInTime = 0.0f, float volume = 1.0f, Transform trackingTrans = null, bool isTracking = false, System.Action onPlayEnded = null )
     {
         AudioResource resource = m_resourceTable[ dataHandle ]; 
 
@@ -175,7 +175,8 @@ public class AudioPlayer
                         isLoop, 
                         fadeInTime, 
                         volume,
-                        isTracking );
+                        isTracking,
+                        onPlayEnded );
 
         m_numPlayRequestPerFrame++;
 

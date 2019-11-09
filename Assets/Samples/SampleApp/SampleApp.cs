@@ -82,7 +82,8 @@ public class SampleApp : MonoBehaviour
             using( var vs = new GUILayout.VerticalScope())
             {
                 if( GUILayout.Button( "Play SE" )){
-                    m_handleSE = m_seCtrl.Play( clipIndex:0 ); // 0番目のSEを再生する.
+                    // 0番目のSEを再生する.
+                    m_handleSE = m_seCtrl.Play( clipIndex:0, false, 0.0f, 1.0f, ()=>{ Debug.Log( "Ended." );} );
                 }
                 else if( m_seCtrl.IsPlaying( m_handleSE ))
                 {
@@ -96,7 +97,7 @@ public class SampleApp : MonoBehaviour
             using( var vs = new GUILayout.VerticalScope())
             {
                 if( GUILayout.Button( "Play Voice" )){
-                    m_handleVoice = m_voiceCtrl.Play( clipIndex:0 ); // 0番目のボイスを再生する.
+                    m_handleVoice = m_voiceCtrl.Play( clipIndex:0, false, 0.0f, 1.0f ); // 0番目のボイスを再生する.
                 }
                 else if( m_voiceCtrl.IsPlaying( m_handleVoice ))
                 {

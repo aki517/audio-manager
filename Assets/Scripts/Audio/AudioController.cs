@@ -18,14 +18,14 @@ public class AudioController
         m_owner = owner;
     }
 
-    public int Play( int clipIndex, bool isLoop = false, float fadeInTime = 0.0f, float volume = 1.0f )
+    public int Play( int clipIndex, bool isLoop = false, float fadeInTime = 0.0f, float volume = 1.0f, System.Action onPlayEnded = null )
     {
-        return m_owner.Play( DataHandle, clipIndex, isLoop, fadeInTime, volume, null );
+        return m_owner.Play( DataHandle, clipIndex, isLoop, fadeInTime, volume, null, false, onPlayEnded );
     }
 
-    public int Play3D( int clipIndex, Transform targetTrans, bool isTracking, bool isLoop = false, float fadeInTime = 0.0f, float volume = 1.0f )
+    public int Play3D( int clipIndex, Transform targetTrans, bool isTracking, bool isLoop = false, float fadeInTime = 0.0f, float volume = 1.0f, System.Action onPlayEnded = null )
     {
-        return m_owner.Play( DataHandle, clipIndex, isLoop, fadeInTime, volume, targetTrans, isTracking );
+        return m_owner.Play( DataHandle, clipIndex, isLoop, fadeInTime, volume, targetTrans, isTracking, onPlayEnded );
     }
 
     public void Stop( int audioHandle, float fadeOutTime = 0.0f ){ m_owner.Stop( audioHandle, fadeOutTime ); }

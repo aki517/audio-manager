@@ -12,6 +12,7 @@ public class AudioObject
     AudioSource m_audioSource;
     Transform m_sourceTrans;
     Transform m_trackingTrans;
+    System.Action m_onPlayEnded;
     float m_fadeVolume;
     float m_fadeEndTime;
     float m_fadeTimer;
@@ -81,7 +82,13 @@ public class AudioObject
             break;
         }
 
-        return (State != AudioState.None);
+        bool isPlaying = (State != AudioState.None);
+        if( !isPlaying && m_onPlayEnded != null ){
+            m_onPlayEnded();
+            m_onPlayEnded = null;
+        }
+
+        return isPlaying;
     }
 
     /// <summary>
@@ -95,7 +102,8 @@ public class AudioObject
                         bool isLoop, 
                         float fadeInTime, 
                         float volume,
-                        bool isTracking )
+                        bool isTracking,
+                        System.Action onPlayEnded )
     {
         float startVolume;
         if( fadeInTime > 0.0f )
@@ -132,6 +140,7 @@ public class AudioObject
 
         Handle = audioHandle;
 
+        m_onPlayEnded = onPlayEnded;
         m_isTracking = isTracking;
     }
 
@@ -188,6 +197,7 @@ public class AudioObject
         Handle = AudioExtensions.EmptyAudioHandle;
         m_trackingTrans = null;
         m_isTracking = false;
+        m_onPlayEnded = null;
 
         if( m_audioSource != null )
         {
