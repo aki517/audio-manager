@@ -73,7 +73,7 @@ public class SampleApp : MonoBehaviour
                 else
                 {
                     if( GUILayout.Button( "Play BGM" )){
-                        m_handleBgm = m_bgmCtrl.Play( clipIndex:0 );
+                        m_handleBgm = m_bgmCtrl.Play( clipIndex:0, false, 10f );
                     }
                 }
             }

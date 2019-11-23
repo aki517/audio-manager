@@ -18,6 +18,8 @@ public class AudioObject
     float m_fadeTimer;
     bool m_isTracking;
 
+    AudioResource m_nowRes;
+
     public AudioState State{ get; private set; }
     public int Index{ get; private set; }
     public int Handle{ get; private set; }
@@ -48,12 +50,7 @@ public class AudioObject
         {
             case AudioState.FadeIn:
             {
-                m_fadeTimer += deltaTime;
-                float t = Mathf.Min( 1.0f, (m_fadeTimer / m_fadeEndTime));
-                float volume = Mathf.Lerp( 0.0f, m_fadeVolume, t );
-                m_audioSource.volume = volume;
-
-                if( t >= 1.0f ){
+                if( FadeProcess( deltaTime, 0.0f, m_fadeVolume, m_nowRes.curveFadeIn )){
                     ChangeState( AudioState.Playing );
                 }
             }
@@ -69,12 +66,7 @@ public class AudioObject
             
             case AudioState.FadeOut:
             {
-                m_fadeTimer += deltaTime;
-                float t = Mathf.Min( 1.0f, (m_fadeTimer / m_fadeEndTime));
-                float volume = Mathf.Lerp( m_fadeVolume, 0.0f, t );
-                m_audioSource.volume = volume;
-
-                if( t >= 1.0f ){
+                if( FadeProcess( deltaTime, m_fadeVolume, 0.0f, m_nowRes.curveFadeOut )){
                     m_audioSource.Stop();
                     ChangeState( AudioState.None );
                 }
@@ -94,9 +86,8 @@ public class AudioObject
     /// <summary>
     /// 再生.
     /// </summary>
-    public void Play(   AudioClip clip,
-                        AudioMixerGroup group,
-                        int priority,
+    public void Play(   int clipIndex,
+                        AudioResource resource,
                         int audioHandle,
                         Transform targetTrans, 
                         bool isLoop, 
@@ -130,11 +121,11 @@ public class AudioObject
         }
 
         AudioSource source = m_audioSource;
-        source.outputAudioMixerGroup = group;
-        source.priority = priority;
+        source.outputAudioMixerGroup = resource.group;
+        source.priority = resource.priority;
         source.volume = startVolume;
         source.spatialBlend = spatialBlend;
-        source.clip = clip;
+        source.clip = resource.clips[ clipIndex ];
         source.loop = isLoop;
         source.Play();
 
@@ -142,7 +133,8 @@ public class AudioObject
 
         m_onPlayEnded = onPlayEnded;
         m_isTracking = isTracking;
-    }
+        m_nowRes = resource;
+    }    
 
     /// <summary>
     /// 停止.
@@ -213,11 +205,22 @@ public class AudioObject
     /// </summary>
     private void ChangeState( AudioState nextState )
     {
-        //AudioState nowState = State;
-        //if( nowState != AudioState.None ){}
         State = nextState;
     }
 
+    /// <summary>
+    /// フェード処理.
+    /// </summary>
+    private bool FadeProcess( float dt, float from, float to, AnimationCurve cv )
+    {
+        m_fadeTimer += dt;
+        float t = Mathf.Min( 1.0f, FadeProgress );
+        float volume = cv.Evaluate( t );
+        m_audioSource.volume = volume;
+        return (t >= 1.0f);
+    }
+
+    private float FadeProgress{ get{ return (m_fadeTimer / m_fadeEndTime); } }
 
 }   // End of class AudioObject.
 

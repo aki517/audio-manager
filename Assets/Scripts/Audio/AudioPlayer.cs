@@ -167,9 +167,8 @@ public class AudioPlayer
 
         int audioHandle = MakeAudioHandle( audioObj.Index, clipIndex, dataHandle, (m_activeList.Count - 1));
 
-        audioObj.Play(  resource.clips[ clipIndex ], 
-                        resource.group, 
-                        resource.priority, 
+        audioObj.Play(  clipIndex,
+                        resource,
                         audioHandle, 
                         trackingTrans, 
                         isLoop, 
